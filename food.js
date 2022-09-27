@@ -11,12 +11,8 @@ function Food() {
     }
   };
 
-  this.invisible = function () {
-    if (this.x < -30) {
-      return true;
-    } else {
-      return false;
-    }
+  this.isInvisible = function () {
+    return !!(this.x < -30);
   };
 
   this.show = function () {

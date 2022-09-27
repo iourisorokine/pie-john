@@ -34,6 +34,7 @@ function Sun() {
   this.shineVar = 0.1;
   this.shineMin = -5;
   this.shineMax = 5;
+  this.sunCircles = [50, 70, 90, 100, 120];
 
   this.update = function () {
     this.x = this.x - this.speed;
@@ -49,14 +50,12 @@ function Sun() {
   this.show = function () {
     fill(255, 255, 80, 60);
     noStroke();
-    ellipse(this.x, this.y, 50 - this.shine, 50 + this.shine);
-    ellipse(this.x, this.y, 70 + this.shine, 70 - this.shine);
-    ellipse(this.x, this.y, 90 - this.shine, 90 + this.shine);
-    ellipse(this.x, this.y, 100 + this.shine, 100 - this.shine);
-    ellipse(this.x, this.y, 120 + this.shine, 120 + this.shine);
-    textSize(10);
-    fill(100, 100, 0, 100);
-    text(this.x - 5, this.y - 5, "o  o");
-    text(this.x - 5, this.y + 5, " __/");
+    this.sunCircles.forEach((i) => {
+      ellipse(this.x, this.y, i - this.shine, i + this.shine);
+    });
+    // textSize(10);
+    // stroke(100, 100, 0, 100);
+    // text(this.x - 5, this.y - 5, "o  o");
+    // text(this.x - 5, this.y + 5, " __/");
   };
 }

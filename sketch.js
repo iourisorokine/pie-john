@@ -7,7 +7,7 @@ let poops = [];
 let globalSpeed = 2;
 let hDesceleration = 0.1;
 let globalNormSpeed = 3;
-let level = 1;
+let level = 0;
 let levelGauge = 0;
 let clouds = [];
 let sun;
@@ -63,10 +63,10 @@ function draw() {
       grounds[i].update();
 
       if (grounds[i].hits(john)) {
-        this.health = this.health - 3;
+        health -= 3;
       }
       //grounds disappear when offscreen
-      if (grounds[i].invisible() == true) {
+      if (grounds[i].invisible()) {
         grounds.splice(i, 1);
       }
     }
@@ -75,14 +75,15 @@ function draw() {
     if (frameCount % 30 == 0 && random(3) > 2) {
       foods.push(new Food());
     }
-    for (var j = 0; j < foods.length; j++) {
+    for (let j = 0; j < foods.length; j++) {
       foods[j].show();
       foods[j].update();
+
       if (foods[j].eaten(john) == true) {
         foods.splice(j, 1);
         levelGauge++;
       } else {
-        if (foods[j].invisible() == true) {
+        if (foods[j].isInvisible()) {
           foods.splice(j, 1);
         }
       }
@@ -130,6 +131,7 @@ function draw() {
       readyMessage();
     } else if (frameCount < 480) {
       goMessage();
+      level = 1;
     }
 
     //message in case no food to poop
@@ -203,20 +205,12 @@ howToPlayMessage = function () {
   text("Right-arrow : accelerate", 100, 260);
   text("Left-arrow: slow down", 100, 290);
   text("Space: poop", 100, 320);
-  if (frameCount % 55 == 0) {
-    john.up();
-    john.wingMove();
-  }
 };
 readyMessage = function () {
   fill(255);
   textSize(40);
   strokeWeight(6);
   text("READY?", 140, 250);
-  if (frameCount % 55 == 0) {
-    john.up();
-    john.wingMove();
-  }
 };
 goMessage = function () {
   fill(255);

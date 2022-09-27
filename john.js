@@ -2,7 +2,7 @@ function John() {
   this.y = height / 4;
   this.x = 180;
 
-  this.gravity = 0.1;
+  this.gravity = { 0: 0, 1: 0.1, 2: 0.2, 3: 0.3 };
   this.lift = -8;
   this.velocity = 0;
   this.wingPosMax = 30;
@@ -44,8 +44,7 @@ function John() {
   };
 
   this.update = function () {
-    this.gravity = 0.1 * level;
-    this.velocity += this.gravity;
+    this.velocity += this.gravity[level];
     this.y += this.velocity;
     if (this.wingPos < this.wingPosMax) {
       this.wingPos += 0.8;

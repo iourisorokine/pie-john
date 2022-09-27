@@ -1,3 +1,15 @@
+const levels = {
+  1: {
+    poopSize: 10,
+  },
+  2: {
+    poopSize: 15,
+  },
+  3: {
+    poopSize: 20,
+  },
+};
+
 function Poop(aim) {
   this.aim = aim;
   this.x = john.x;
@@ -10,16 +22,8 @@ function Poop(aim) {
   this.show = function () {
     noStroke();
     fill(230);
-    switch (level) {
-      case 1:
-        ellipse(this.x - 10, this.y + 20, 10, 10);
-        break;
-      case 2:
-        ellipse(this.x - 10, this.y + 20, 15, 15);
-        break;
-      case 3:
-        ellipse(this.x - 10, this.y + 20, 20, 20);
-    }
+    const poopSize = levels[level].poopSize;
+    ellipse(this.x - 10, this.y + 20, poopSize, poopSize);
   };
 
   this.update = function () {
@@ -34,7 +38,7 @@ function Poop(aim) {
   };
 
   this.hitsTarget = function () {
-    if (this.landed == true) {
+    if (this.landed) {
       if (target.x < this.x && target.x + 120 > this.x) {
         if (target.y < this.y && target.y + 30 > this.y) {
           return true;
