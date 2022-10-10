@@ -53,9 +53,13 @@ function Sun() {
     this.sunCircles.forEach((i) => {
       ellipse(this.x, this.y, i - this.shine, i + this.shine);
     });
-    // textSize(10);
-    // stroke(100, 100, 0, 100);
-    // text(this.x - 5, this.y - 5, "o  o");
-    // text(this.x - 5, this.y + 5, " __/");
+    textSize(10);
+    stroke(100, 100, 0, 100);
+    text(this.x - 5, this.y - 5, "o  o");
+    text(this.x - 5, this.y + 5, " __/");
+  };
+  this.animate = function () {
+    this.update();
+    this.show();
   };
 }

@@ -1,7 +1,7 @@
-function Ground() {
-  this.bottom = 200;
-  this.x = width;
-  this.w = 300;
+function Ground(startX, groundHight = 200, groubdWidth = 300) {
+  this.bottom = groundHight;
+  this.x = startX;
+  this.w = groubdWidth;
 
   // determines if John hits the ground
   this.hits = function (john) {
@@ -31,6 +31,10 @@ function Ground() {
       return false;
     }
   };
+  this.animate = function () {
+    this.update();
+    this.show();
+  };
 }
 
 function Target() {
@@ -53,5 +57,9 @@ function Target() {
     rect(this.x + 25, this.y + 5, 70, 20);
     fill(255, 0, 0);
     rect(this.x + 45, this.y + 10, 30, 10);
+  };
+  this.animate = function () {
+    this.show();
+    this.update();
   };
 }

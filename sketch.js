@@ -15,16 +15,20 @@ let cantPoop = false;
 let target;
 
 function setup() {
-  createCanvas(500, 600);
+  createCanvas(800, 700);
   john = new John();
   sun = new Sun();
   target = new Target();
-  grounds.push(new Ground());
+  [0, 100, 200, 300, 400, 500, 600, 700, 800].forEach((x) =>
+    grounds.push(new Ground(x, 200, 100))
+  );
   clouds.push(new Cloud());
 }
 
 function draw() {
-  levelUp();
+  if (frameCount > 300) {
+    levelUp();
+  }
   if (health < 0) {
     gameOver();
   } else {
@@ -32,8 +36,7 @@ function draw() {
     background(0, 150, 240);
 
     //sun
-    sun.update();
-    sun.show();
+    sun.animate();
 
     //Clouds
     for (let k = 0; k <= clouds.length - 1; k++) {
@@ -43,7 +46,7 @@ function draw() {
       clouds[k].update();
       clouds[k].show();
     }
-    if (frameCount % 100 == 0) {
+    if (frameCount % 100 === 0) {
       clouds.push(new Cloud());
     }
 
@@ -53,14 +56,13 @@ function draw() {
     } else if (globalSpeed < globalNormSpeed) {
       globalSpeed += hDesceleration;
     }
-    if (grounds[grounds.length - 1].x + 298 < width) {
-      grounds.push(new Ground());
+    if (grounds[grounds.length - 1].x + 100 < width) {
+      grounds.push(new Ground(width, 200, 100));
     }
     //all events happening with the grounds array
     //update and show
     for (let i = grounds.length - 1; i >= 0; i--) {
-      grounds[i].show();
-      grounds[i].update();
+      grounds[i].animate();
 
       if (grounds[i].hits(john)) {
         health -= 3;
@@ -90,21 +92,18 @@ function draw() {
     }
 
     //target
-    target.update();
-    target.show();
+    target.animate();
 
     // moves update of John and of the poop
     for (var i = 0; i <= poops.length - 1; i++) {
       poops[i].update();
       poops[i].show();
-      //  poops offscreen delete --> bugs... :(
-      //  if(poops[i].x<-10){
-      //    poops.splice(i,1);
-      //  }
-      if (poops[i].hitsTarget() == true) {
+      if (poops[i].hitsTarget()) {
         scorrr = scorrr + level * level;
-        poops.splice(i, 1);
         console.log("target hit");
+      }
+      if (poops[0].x < -10) {
+        poops.shift(1);
       }
     }
 
@@ -125,14 +124,7 @@ function draw() {
     rect(100, 25, levelGauge * 3, 15);
 
     //tutorial showing how to play at the beginning of the game
-    if (frameCount < 400) {
-      howToPlayMessage();
-    } else if (frameCount < 450) {
-      readyMessage();
-    } else if (frameCount < 480) {
-      goMessage();
-      level = 1;
-    }
+    showGameIntro();
 
     //message in case no food to poop
     textSize(15);
@@ -192,29 +184,3 @@ function keyPressed() {
     globalSpeed = 1;
   }
 }
-
-howToPlayMessage = function () {
-  fill(255);
-  textSize(40);
-  strokeWeight(6);
-  text("PIE JOHN", 140, 150);
-  textSize(15);
-  strokeWeight(2);
-  text("Poop on the targets and score points!", 100, 200);
-  text("Up-arrow : up", 100, 230);
-  text("Right-arrow : accelerate", 100, 260);
-  text("Left-arrow: slow down", 100, 290);
-  text("Space: poop", 100, 320);
-};
-readyMessage = function () {
-  fill(255);
-  textSize(40);
-  strokeWeight(6);
-  text("READY?", 140, 250);
-};
-goMessage = function () {
-  fill(255);
-  textSize(40);
-  strokeWeight(6);
-  text("GO!!!", 140, 250);
-};
